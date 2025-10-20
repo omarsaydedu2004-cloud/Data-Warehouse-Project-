@@ -10,4 +10,4 @@
 ----Clean and Transform And Handle The Data 
 3/Gold Layer 
 ----prepare the Data for Analysis
-----MMake The Data Ready For Business 
+----Make The Data Ready For Business 
