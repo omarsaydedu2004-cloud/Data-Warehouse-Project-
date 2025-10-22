@@ -1,13 +1,23 @@
+يقوم هذا الكود بحذف قاعدة البيانات إذا كانت موجودة حتى لا تحصل أخطاء مع إنشاء قاعدة بيانات مع انشاء قاعدة بيانات جديدة
+ويقوم بانشاء المخططات الخاصة بالمراحل الثلاثة لعملية المشروع وهم 
+Bronze 
+Silver 
+GOLD 
+
 --استخدم المكان الأساسى  للقيام بإضافة قاعدة بيانات جديدة 
 
 use master;
+
 -- القيام بحذف قاعدة البيانات إذا كانت موجودة وإضافتها مرة أخرى حتى لا تحدث أخطاء أثناء الإضافة 
+
 if exists (select 1 from sys.databases where name = 'datawarehouse_project')
 begin 
       alter database datawarehouse_project set single_user with rollback immediate 
 	  Drop database datawarehouse_project
 end ;
+
 -- إنشاء قاعدة بيانات جديدية 
+
 create database datawarehouse_project ;
 
 use datawarehouse_project ;
