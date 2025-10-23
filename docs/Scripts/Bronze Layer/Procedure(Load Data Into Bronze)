@@ -1,1 +1,134 @@
+Create or alter procedure Bronze.Load_Bronze as 
+BEGIN
+    Declare @start_time datetime,@end_time datetime,@batch_strat_time datetime,@batch_end_time datetime 
+	set @batch_strat_time = getdate()
+		BEGIN TRY
+			print'--------------------------------------'
+			PRINT '<<<<Create Bronze Layer Tables'
+			print'--------------------------------------'
+
+			print'--------------------------------------'
+			print '<<<<Create CRM Tables' 
+			print'--------------------------------------'
+
+
+			set @start_time = getdate()
+			print '<<<<truncate Bronze.crm_cust_info' 
+			Truncate Table Bronze.crm_cust_info
+			print '<<<<inserting data into :Bronze.crm_cust_info'
+			BULK insert Bronze.crm_cust_info 
+			from 'D:\Data anylsis\data analysis with barra\My Projects\Data Warehouse\Datasets\source_crm\cust_info.csv'
+			with 
+			(
+				firstrow = 2 ,
+				fieldterminator = ',',
+				tablock
+
+			);
+			set @end_time = getdate()
+			print'Load Duration = ' +' '+ cast(datediff(second,@start_time,@end_time) as nvarchar(50))+' ' + 'Seconds'
+		--=====================================================================================================================
+		--=====================================================================================================================
+		--=====================================================================================================================
+			set @start_time = getdate()
+			print '<<<<truncateBronze.crm_product_info'
+			truncate table Bronze.crm_product_info
+			print'<<<<inserting data into :crm_product_info'
+			Bulk insert Bronze.crm_product_info 
+			from 'D:\Data anylsis\data analysis with barra\My Projects\Data Warehouse\Datasets\source_crm\prd_info.csv'
+			with 
+			(
+			firstrow = 2 ,
+			fieldterminator = ',' ,
+			tablock 
+			);
+			set @end_time = getdate()
+
+			print'Load Duration = '+ ' '+ cast(datediff(second,@start_time,@end_time)as nvarchar(50)) + ' '+ 'seconds'
+		--=====================================================================================================================
+		--=====================================================================================================================
+		--=====================================================================================================================
+			set @start_time = getdate()
+			print '<<<<truncateBronze.crm_sales_Detailes'
+			set @start_time = getdate()
+			Truncate table Bronze.crm_sales_Detailes
+			print'<<<<inserting data into :crm_sales_Detailes'
+			BULK INSERT Bronze.crm_sales_Detailes 
+			FROM 'D:\Data anylsis\data analysis with barra\My Projects\Data Warehouse\Datasets\source_crm\sales_details.csv' 
+			WITH 
+			(
+			FIRSTROW = 2 ,
+			FIELDTERMINATOR = ',' ,
+			Tablock
+			);
+			set @end_time = getdate()
+			print'Load Duration = '+ ' '+ cast(datediff(second,@start_time,@end_time)as nvarchar(50)) + ' '+ 'seconds'
+
+			print'--------------------------------------'
+			print '<<<<Create CRM Tables' 
+			print'--------------------------------------'
+
+
+			set @start_time = getdate()
+			print '<<<<truncate Bronze.erp_CUST_AZ12'
+			Truncate table Bronze.erp_CUST_AZ12
+			print'<<<<inserting data into :Bronze.erp_CUST_AZ12'
+			BULK INSERT Bronze.erp_CUST_AZ12 
+			FROM 'D:\Data anylsis\data analysis with barra\My Projects\Data Warehouse\Datasets\source_erp\CUST_AZ12.csv' 
+			WITH 
+			(
+			FIRSTROW = 2 ,
+			FIELDTERMINATOR = ',' ,
+			Tablock
+			);
+			set @end_time = getdate()
+			print'Load Duration = '+ ' '+ cast(datediff(second,@start_time,@end_time)as nvarchar(50)) + ' '+ 'seconds'
+
+		--=====================================================================================================================
+		--=====================================================================================================================
+		--=====================================================================================================================
+			print '<<<<truncate Bronze.erp_LOC_A101'
+			Truncate table Bronze.erp_LOC_A101
+			print'<<<<inserting data into :Bronze.erp_LOC_A101'
+			BULK INSERT Bronze.erp_LOC_A101 
+			FROM 'D:\Data anylsis\data analysis with barra\My Projects\Data Warehouse\Datasets\source_erp\LOC_A101.csv' 
+			WITH 
+			(
+			FIRSTROW = 2 ,
+			FIELDTERMINATOR = ',' ,
+			Tablock
+			);
+
+		--=====================================================================================================================
+		--=====================================================================================================================
+		--=====================================================================================================================
+			set @start_time = getdate()
+			print '<<<<truncate Bronze.erp_PX_CAT_G1V2'
+			Truncate table Bronze.erp_PX_CAT_G1V2
+			print'<<<<inserting data into :Bronze.erp_PX_CAT_G1V2'
+			BULK INSERT Bronze.erp_PX_CAT_G1V2 
+			FROM 'D:\Data anylsis\data analysis with barra\My Projects\Data Warehouse\Datasets\source_erp\PX_CAT_G1V2.csv' 
+			WITH 
+			(
+			FIRSTROW = 2 ,
+			FIELDTERMINATOR = ',' ,
+			Tablock
+			);
+			set @end_time = getdate()
+			print'Load Duration = '+ ' '+ cast(datediff(second,@start_time,@end_time)as nvarchar(50)) + ' '+ 'seconds'
+			set @batch_end_time = getdate()
+			print'--------------------------------------'
+            print 'Batch Time Loading = ' + cast(datediff(second,@batch_strat_time ,@batch_end_time) as nvarchar(50))+' seconds'
+			print'--------------------------------------'
+		END TRY
+	BEGIN CATCH 
+		print '======================================='
+		print '>>>>WE FIND AN ERROR'
+		print '	ERROR MASSAGE'+' ' + ERROR_MESSAGE()
+		print '	ERROR MASSAGE' +' '+ CAST(ERROR_NUMBER() AS NVARCHAR(50))
+		print '	ERROR MASSAGE' + ERROR_STATE()
+		print '========================================'
+
+	END CATCH
+end 
 
