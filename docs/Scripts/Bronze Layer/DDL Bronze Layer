@@ -1,1 +1,107 @@
+----------------------------------------------------
+--CREATE CRM TABLES 
+----------------------------------------------------
+
+--Drop table if exits 
+if object_id('Bronze.crm_cust_info','U') is not null 
+drop table Bronze.crm_cust_info
+
+GO
+
+--CREATE Bronze.crm_cust_info TABLE
+Create table Bronze.crm_cust_info 
+(
+cst_id              int,
+cst_key             nvarchar(50),
+cst_firstname       nvarchar(50),
+cst_lastname        nvarchar(50),
+cst_marital_status  nvarchar(50),
+cst_gndr            nvarchar(50),
+cst_create_date     date
+)
+
+GO 
+--Drop table if exits 
+if object_id ('Bronze.crm_product_info','U') is not null
+drop table Bronze.crm_product_info
+
+GO
+--CREATE Bronze.crm_product_info
+create table Bronze.crm_product_info 
+(
+prd_id            int
+,prd_key          nvarchar(50)
+,prd_nm           nvarchar(50)
+,prd_cost         int
+,prd_line         nvarchar(50)
+,prd_start_dt     date
+,prd_end_dt       date 
+)
+
+GO
+--Drop table if exits 
+if object_id('Bronze.crm_sales_Detailes','U') is not null
+drop table Bronze.crm_sales_Detailes
+
+GO
+--CREATE Bronze.crm_sales_Detailes
+Create table Bronze.crm_sales_Detailes
+(
+sls_ord_num             nvarchar(50)
+,sls_prd_key            nvarchar(50)
+,sls_cust_id            int
+,sls_order_dt           date
+,sls_ship_dt            date 
+,sls_due_dt             date 
+,sls_sales              int
+,sls_quantity           int
+,sls_price              int
+)
+GO
+
+----------------------------------------------------
+--CREATE ERP TABLES 
+----------------------------------------------------
+--Drop table if exits 
+if object_id('Bronze.erp_CUST_AZ12','U') is not null 
+
+drop table Bronze.erp_CUST_AZ12
+GO
+--CREATE Bronze.erp_CUST_AZ12
+Create table Bronze.erp_CUST_AZ12 
+(
+CID      nvarchar(50)  
+,BDATE   date
+,GEN     nvarchar(50)
+)
+
+GO
+--Drop table if exits 
+if object_id('Bronze.erp_LOC_A101','U') is not null 
+Drop table Bronze.erp_LOC_A101
+
+GO
+--CREATE Bronze.erp_LOC_A101
+Create table Bronze.erp_LOC_A101 
+(
+CID        nvarchar(50)
+,CNTRY     nvarchar(50)
+)
+
+GO
+--Drop table if exits 
+if object_id('Bronze.erp_PX_CAT_G1V2','U') is not null
+Drop table Bronze.erp_PX_CAT_G1V2
+
+Go 
+--CREATE Bronze.erp_PX_CAT_G1V2	
+Create table Bronze.erp_PX_CAT_G1V2 
+(
+ID              nvarchar(50)
+,CAT            nvarchar(50)
+,SUBCAT         nvarchar(50)
+,MAINTENANCE    nvarchar(50)
+)
+
+Go
 
